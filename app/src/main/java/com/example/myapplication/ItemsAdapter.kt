@@ -11,8 +11,9 @@ import ai.radius.blink.model.*
 class ItemsAdapter(private val items: List<ScannedItem>) : RecyclerView.Adapter<ItemsAdapter.ItemViewHolder>() {
 
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nameTextView: TextView = itemView.findViewById(R.id.id)
-        val descriptionTextView: TextView = itemView.findViewById(R.id.externalId)
+        val lineItemId: TextView = itemView.findViewById(R.id.lineItemId)
+        val data: TextView = itemView.findViewById(R.id.data)
+        val sku: TextView = itemView.findViewById(R.id.sku)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -23,8 +24,9 @@ class ItemsAdapter(private val items: List<ScannedItem>) : RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = items[position]
-        holder.nameTextView.text = item.data
-        holder.descriptionTextView.text = item.extras?.sku ?: "No SKU"
+        holder.lineItemId.text = item.lineItemId.toString()
+        holder.data.text = item.data
+        holder.sku.text = item.extras?.sku ?: "No SKU"
     }
 
     override fun getItemCount(): Int = items.size
