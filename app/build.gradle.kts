@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.myapplication"
-        minSdk = 33
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -49,7 +49,7 @@ dependencies {
     implementation(libs.kotlin.stdlib.jdk8)
     implementation(libs.kotlin.reflect)
     implementation(libs.okhttp)
-    implementation(files("../libs/blinksdk-0.0.1.jar"))
+    implementation(files("../libs/blinksdk-debug.aar"))
     implementation(libs.org.jetbrains.kotlin.kotlin.stdlib.jdk8)
     implementation(libs.org.jetbrains.kotlin.kotlin.reflect)
     implementation(libs.moshi.kotlin)
@@ -59,6 +59,16 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit2.converter.moshi)
     implementation(libs.retrofit2.converter.scalars)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.serialization.core)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    api(libs.ktor.client.core)
+    api(libs.ktor.client.serialization)
+    api(libs.ktor.client.content.negotiation)
+    api(libs.ktor.serialization.kotlinx.json)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

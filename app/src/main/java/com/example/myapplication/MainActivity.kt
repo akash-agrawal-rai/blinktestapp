@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.scan.collect { data ->
                     Log.d("coro", "Received: $data")
-                    val adapter = data.scanData?.let { ItemsAdapter(it) }
+                    val adapter = ItemsAdapter(data.scanData)
                     recyclerView.adapter = adapter
                 }
             }

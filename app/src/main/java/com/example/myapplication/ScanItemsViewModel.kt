@@ -1,25 +1,33 @@
 package com.example.myapplication
 
-import ai.radius.blink.DefaultApi
-import ai.radius.blink.infrastructure.ApiClient
-import ai.radius.blink.model.ScanResponseData
+import rai.blink.api.DefaultApi
+import rai.blink.model.ScanResponseData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
+
 
 class ScanItemsViewModel: ViewModel() {
-    private val _data = MutableStateFlow<ScanResponseData>(
-        value = ScanResponseData()
+    private val _data = MutableStateFlow(
+        value = ScanResponseData("init", createdAt = Clock.System.now(), deviceId = "init", status = ScanResponseData.Status.IDLE, scanData = listOf())
     )
     val scan = _data.asStateFlow()
 
-    private val apiClient = ApiClient("http://192.168.29.19:8000")
-    private val webService = apiClient.createService(DefaultApi::class.java)
+    private val client = HttpClient(OkHttp) {
+        install(ContentNegotiation) {
+            json()
+        }
+    }
 
-    private val call = webService.scanGet()
+    private val apiInstance = DefaultApi("http://192.168.29.19:8000", client)
 
     init {
         startLongPolling()
@@ -27,7 +35,7 @@ class ScanItemsViewModel: ViewModel() {
 
     private fun startLongPolling() {
         viewModelScope.launch {
-            LongPollingHelper.longPollingFlow(call).collectLatest { scan ->
+            LongPollingHelper.longPollingFlow(apiInstance).collectLatest { scan ->
                 _data.value = scan
             }
         }

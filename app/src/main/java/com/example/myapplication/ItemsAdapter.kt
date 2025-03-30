@@ -5,8 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-//import org.openapitools.client.models.*
-import ai.radius.blink.model.*
+import rai.blink.model.ScannedItem
 
 class ItemsAdapter(private val items: List<ScannedItem>) : RecyclerView.Adapter<ItemsAdapter.ItemViewHolder>() {
 
@@ -26,7 +25,7 @@ class ItemsAdapter(private val items: List<ScannedItem>) : RecyclerView.Adapter<
         val item = items[position]
         holder.lineItemId.text = item.lineItemId.toString()
         holder.data.text = item.data
-        holder.sku.text = item.extras?.sku ?: "No SKU"
+        holder.sku.text = item.extras.sku
     }
 
     override fun getItemCount(): Int = items.size
