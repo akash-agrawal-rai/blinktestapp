@@ -8,7 +8,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.launch
+import rai.blink.api.DefaultApi
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,9 +23,17 @@ class MainActivity : AppCompatActivity() {
         Log.d("main", "onCreate: Init")
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        val client = HttpClient(OkHttp) {
+            install(ContentNegotiation) {
+                json()
+            }
+        }
+
+        val apiInstance = DefaultApi("http://192.168.29.19:8000", client)
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                smartsense().collect { data ->
+                apiInstance.smartsense().collect { data ->
                     Log.d("coro", "Received: ${data.body()}")
                     val adapter = ItemsAdapter(data.body().scanData)
                     recyclerView.adapter = adapter
