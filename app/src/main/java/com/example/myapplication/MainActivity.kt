@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val apiInstance = BlinkApi("10.206.160.145:8000", true)
+        val apiInstance = BlinkApi("10.206.160.12:8000", "3d9e85c1-d229-49af-9dcc-e365c17853de", true)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

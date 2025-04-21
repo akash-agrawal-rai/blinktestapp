@@ -45,7 +45,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.recyclerview)
-    implementation(files("libs/blinksdk-debug.aar"))
+    implementation(files("libs/blinksdk-release.aar"))
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
     implementation(libs.ktor.client.okhttp)
